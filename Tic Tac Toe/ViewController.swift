@@ -25,8 +25,8 @@ class ViewController: UIViewController {
     var firstTurn = "X"
     var currentTurn = "X"
     
-    var NOUGHT = "O"
-    var CROSS = "X"
+    let NOUGHT = "O"
+    let CROSS = "X"
     var board = [UIButton]()
     
     
@@ -51,10 +51,56 @@ class ViewController: UIViewController {
     @IBAction func boardAction(_ sender: UIButton) {
         addToBoard(sender)
         
+        if checkForWin(CROSS) {
+            resultAlert(title: "Player 1 won!")
+        }
+        
+        if checkForWin(NOUGHT) {
+            resultAlert(title: "Player 2 won!")
+        }
+        
         print(boardIsFull())
         if (boardIsFull()) {
             resultAlert(title: "Draw")
         }
+    }
+    
+    func checkForWin(_ s :String) -> Bool {
+        if symbol(a1,s) && symbol(a2,s) && symbol(a3,s) {
+            return true
+        }
+        if symbol(b1,s) && symbol(b2,s) && symbol(b3,s) {
+            return true
+        }
+        if symbol(c1,s) && symbol(c2,s) && symbol(c3,s) {
+            return true
+        }
+        
+        
+        if symbol(a1,s) && symbol(b1,s) && symbol(c1,s) {
+            return true
+        }
+        if symbol(a2,s) && symbol(b2,s) && symbol(c2,s) {
+            return true
+        }
+        if symbol(a3,s) && symbol(b3,s) && symbol(c3,s) {
+            return true
+        }
+        
+        
+        if symbol(a1,s) && symbol(b2,s) && symbol(c3,s) {
+            return true
+        }
+        if symbol(a3,s) && symbol(b2,s) && symbol(c1,s) {
+            return true
+        }
+        
+        
+        return false
+    }
+    
+    func symbol(_ btn: UIButton, _ symbol: String) -> Bool {
+        return btn.title(for: .normal) == symbol
     }
     
     func resultAlert(title: String) {
